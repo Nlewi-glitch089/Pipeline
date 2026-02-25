@@ -1,0 +1,5 @@
+app-1  | 
+app-1  | > pipeline-app@1.0.0 start
+app-1  | > next start -p 3000
+app-1  | 
+app-1  | - ready started server on 0.0.0.0:3000, url: http://localhost:3000
