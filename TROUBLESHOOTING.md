@@ -1,6 +1,6 @@
 # Troubleshooting Lab Notes
 
-This project is used for hands-on failure and recovery drills. The notes below summarize common failure modes observed during the lab and how to diagnose and fix them.
+This project is used for hands-on failure and recovery drills. The notes below summarize common failure modes observed during the labs I did, going into brief detail for how to diagnose and fix them.
 
 ## Scenario: Wrong database port
 - Symptom: app repeatedly restarts; db shows healthy.
