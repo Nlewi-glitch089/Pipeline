@@ -1,5 +1,13 @@
 .next
 node_modules
 npm-debug.log
+
+# ignore env and secret files so they are not sent in build context
 .env
+.env*
+secrets
+secrets/
+*.secret
+*.key
 /.git
+
