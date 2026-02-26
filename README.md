@@ -1,4 +1,4 @@
-# Pipeline App — Local Docker Compose Setup
+# Pipeline App : Local Docker Compose Setup
 
 [![CI Build & Smoke Test](https://github.com/Nlewi-glitch089/Pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Nlewi-glitch089/Pipeline/actions/workflows/ci.yml)
 

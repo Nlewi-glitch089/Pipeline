@@ -1,8 +1,0 @@
-REPOSITORY        TAG         IMAGE ID                                                                  CREATED         SIZE
-pipeline-app      latest      sha256:54a0c7b27f9eb9b4b3fabdd47e032ef549ea821c1ea949d70c1feaf68442522a   4 minutes ago   571MB
-postgres          15          sha256:2bc89eed5490967e6b1fa5175d84cb45d65f19fbb8973c7b23450dea785b9505   21 hours ago    633MB
-setupdocker-web   latest      sha256:1b9e965a9831b0e9e3bf9a2bf8f6d71e7c7ae7dba6591a9a93859d29b74746d4   11 days ago     1.6GB
-nextjs-app        latest      sha256:9452e89a0cd7ea1d13a0d162b4fa0b43160ce8d8c48abcb4680596cb8f3abcdc   13 days ago     1.16GB
-nginx             latest      sha256:341bf0f3ce6c5277d6002cf6e1fb0319fa4252add24ab6a0e262e0056d313208   2 weeks ago     240MB
-postgres          15-alpine   sha256:1d1095b0503145be79c79239372aefadfacf6b7c33c9245bbf99ce4b6b89c737   4 weeks ago     392MB
-ubuntu            20.04       sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214   10 months ago   111MB
