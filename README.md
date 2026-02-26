@@ -45,6 +45,10 @@ Verify
 
 See detailed troubleshooting drills: [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 
+Troubleshooting / Failpoints
+
+- Common errors and how I resolved them are collected in [FAILPOINTS.md](FAILPOINTS.md). Review that file for examples you can reference during the demo.
+
 Secrets
 
 - For CI/production use Docker secrets or your cloud provider secret manager.

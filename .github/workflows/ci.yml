@@ -9,18 +9,6 @@ on:
 jobs:
   build-and-smoke:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: appdb
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres" --health-interval=5s --health-timeout=5s --health-retries=5
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,9 +19,21 @@ jobs:
       - name: Ensure docker compose is available
         run: docker compose version
 
-      - name: Build and start services with docker compose
+      - name: Cache NPM
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json','**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Build app image with Buildx and cache
         run: |
-          docker compose up -d --build
+          docker buildx create --use --name buildx-builder || true
+          docker buildx build --cache-from=type=gha --cache-to=type=gha,mode=max -t pipeline-app:ci . --load
+
+      - name: Start services
+        run: docker compose up -d
 
       - name: Wait for DB to be ready
         run: |
