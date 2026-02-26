@@ -13,8 +13,6 @@ System Needs (Technical Requirements)
 ------------------------------------
 
 - Persistent Database: a relational database (Postgres recommended) available via `DATABASE_URL` to store users, courses, lessons, progress, and grades.
-- Object Storage: external blob storage (S3-compatible) for video and media assets, with signed URLs for secure delivery.
-- Background Processing: a job queue and worker system (Redis + worker like Bull/Sidekiq/RQ) for async tasks (video processing, grading, emails).
 - Secure Configuration: runtime-managed secrets (environment variables or secret manager), TLS for web traffic, and least-privilege credentials.
 - CI / Test Runner: automated CI that runs unit, integration, and end-to-end tests on PRs before merge.
 
