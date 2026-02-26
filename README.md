@@ -72,3 +72,22 @@ Notes on Compose healthchecks and `depends_on`
 - This setup uses Compose `2.4` syntax to allow `depends_on` with a `service_healthy` condition so the `app` will wait for the `db` healthcheck to pass before starting.
 - Some Compose versions differ; if your environment uses the newer Compose spec (v3+), you may instead implement an explicit wait (e.g., in the app entrypoint) or use a small wait script.
 
+**Screenshots**
+
+- **Command:** `docker compose down` — output captured after stopping services.
+- **Evidence:**
+
+  ![docker-compose down](screenshots/docker-compose-down.png)
+
+- **Command:** `docker compose ps` — shows running containers and their status.
+- **Evidence:**
+
+  ![compose ps](screenshots/image-1.png)
+
+- **Command:** `docker compose logs --tail=200 app` — shows recent app logs confirming the server started and handled requests.
+- **Evidence:**
+
+  ![app logs](screenshots/image-2.png)
+
+Use these images as evidence that the containers started, the database became healthy, and the app served requests on `http://localhost:3000`.
+
