@@ -89,5 +89,5 @@ Notes on Compose healthchecks and `depends_on`
 
   ![app logs](screenshots/image-2.png)
 
-Use these images as evidence that the containers started, the database became healthy, and the app served requests on `http://localhost:3000`.
+These images are evidence that the containers started, the database became healthy, and the app served requests on `http://localhost:3000`.
 

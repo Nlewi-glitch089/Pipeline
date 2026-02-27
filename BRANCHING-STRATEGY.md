@@ -62,4 +62,4 @@ Notes
 
 - Keep branch names short and descriptive.
 - Use issue IDs in branch names if your team prefers (e.g., `feature/123-add-comments`).
-- Communicate major merges on Slack or your team channel so downstream work can adapt.
+
