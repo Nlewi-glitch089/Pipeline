@@ -3,7 +3,7 @@
 [![CI Build & Smoke Test](https://github.com/Nlewi-glitch089/Pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Nlewi-glitch089/Pipeline/actions/workflows/ci.yml)
 
 
-This repository contains a minimal Next.js app plus a PostgreSQL service and a Docker Compose setup configured for reliable local development.
+This repository contains a minimal Next.js app plus a PostgreSQL service and a Docker Compose setup configured for reliable local development. PIE
 
 Quick features implemented to meet Level-10 look-fors:
 - Multistage `Dockerfile` to produce a small production image.
