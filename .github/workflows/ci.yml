@@ -18,17 +18,10 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          check_present() {
-            if [ -n "${!1:-}" ]; then
-              echo "$1: present"
-            else
-              echo "$1: missing"
-            fi
-          }
-          check_present POSTGRES_USER
-          check_present POSTGRES_PASSWORD
-          check_present POSTGRES_DB
-          check_present DATABASE_URL
+          if [ -n "${POSTGRES_USER:-}" ]; then echo "POSTGRES_USER: present"; else echo "POSTGRES_USER: missing"; fi
+          if [ -n "${POSTGRES_PASSWORD:-}" ]; then echo "POSTGRES_PASSWORD: present"; else echo "POSTGRES_PASSWORD: missing"; fi
+          if [ -n "${POSTGRES_DB:-}" ]; then echo "POSTGRES_DB: present"; else echo "POSTGRES_DB: missing"; fi
+          if [ -n "${DATABASE_URL:-}" ]; then echo "DATABASE_URL: present"; else echo "DATABASE_URL: missing"; fi
       - name: Construct or override DATABASE_URL from POSTGRES_* secrets
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
