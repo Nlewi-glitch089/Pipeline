@@ -115,5 +115,10 @@ Simulating a failing pipeline (evidence step):
 2. Commit and push to `main` and observe a red ✗ in Actions on the `build-and-test` job (capture a screenshot).
 3. Revert the commit with `git revert HEAD`, push, and observe the pipeline turn green ✓ (capture a screenshot).
 
-When preparing evidence, label each screenshot with the step it proves and which skill it demonstrates (TS.5.1 or TS.5.2).
+### CI evidence — failing run
+![CI: Invalid workflow file](screenshots/db-failure.png)
+
+Caption: Red ✗ run showing "Invalid workflow file" error in the Actions UI.
+
+
 
