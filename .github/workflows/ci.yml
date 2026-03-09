@@ -11,7 +11,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Debug: secrets presence (no values)
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          check_present() {
+            if [ -n "${!1:-}" ]; then
+              echo "$1: present"
+            else
+              echo "$1: missing"
+            fi
+          }
+          check_present POSTGRES_USER
+          check_present POSTGRES_PASSWORD
+          check_present POSTGRES_DB
+          check_present DATABASE_URL
       - name: Construct or override DATABASE_URL from POSTGRES_* secrets
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           # If POSTGRES_* secrets are provided, use them to build the URL and
           # override any existing DATABASE_URL so the app inside docker-compose
