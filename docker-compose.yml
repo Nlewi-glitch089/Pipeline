@@ -25,6 +25,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       db:
         condition: service_healthy
