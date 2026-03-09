@@ -117,8 +117,3 @@ Simulating a failing pipeline (evidence step):
 
 When preparing evidence, label each screenshot with the step it proves and which skill it demonstrates (TS.5.1 or TS.5.2).
 
-### CI evidence — failing run
-![CI: Invalid workflow file](screenshots/db-failure.png)
-
-Caption: Red ✗ run showing "Invalid workflow file" error in the Actions UI.
-
