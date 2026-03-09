@@ -91,3 +91,29 @@ Notes on Compose healthchecks and `depends_on`
 
 These images are evidence that the containers started, the database became healthy, and the app served requests on `http://localhost:3000`.
 
+
+## CI / GitHub Actions
+
+This repo includes a CI workflow at `.github/workflows/ci.yml` that:
+
+- Runs build, starts services, runs migrations, and runs tests in `build-and-test`.
+- Deploys to production via SSH in `deploy` (only runs on `main`).
+
+Secrets (add these in your repo: Settings → Secrets and variables → Actions):
+
+- `DATABASE_URL` — used by the `build-and-test` job.
+- `EC2_HOST`, `EC2_USER`, `EC2_KEY` — used by the `deploy` job for SSH deploy.
+
+Important notes:
+
+- Do NOT commit `.env.production` or any real credentials — it is ignored (`.gitignore` includes `.env.production`).
+- The workflow injects secrets into the runner as `${{ secrets.NAME }}`; names must match exactly.
+
+Simulating a failing pipeline (evidence step):
+
+1. Introduce a deliberate, reversible break (example: rename the `db` service in `docker-compose.yml`).
+2. Commit and push to `main` and observe a red ✗ in Actions on the `build-and-test` job (capture a screenshot).
+3. Revert the commit with `git revert HEAD`, push, and observe the pipeline turn green ✓ (capture a screenshot).
+
+When preparing evidence, label each screenshot with the step it proves and which skill it demonstrates (TS.5.1 or TS.5.2).
+
