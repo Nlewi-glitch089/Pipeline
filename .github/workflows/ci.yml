@@ -10,24 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # Keep DATABASE_URL at job level; move POSTGRES_* secret access to the
+      # step scope to avoid invalid context access warnings in some linters.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Construct DATABASE_URL from POSTGRES_* secrets (if unset)
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      - name: Construct or override DATABASE_URL from POSTGRES_* secrets
         run: |
-          if [ -z "${DATABASE_URL:-}" ]; then
-            if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
-              echo "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}" >> $GITHUB_ENV
-              echo "Constructed DATABASE_URL from POSTGRES_* secrets"
-            else
-              echo "No DATABASE_URL provided and POSTGRES_* secrets missing or incomplete" >&2
-            fi
+          # If POSTGRES_* secrets are provided, use them to build the URL and
+          # override any existing DATABASE_URL so the app inside docker-compose
+          # can resolve the DB host as the Compose service name `db`.
+          if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
+            echo "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}" >> $GITHUB_ENV
+            echo "Constructed DATABASE_URL from POSTGRES_* secrets (overriding provided DATABASE_URL if any)"
           else
-            echo "Using provided DATABASE_URL secret"
+            if [ -n "${DATABASE_URL:-}" ]; then
+              echo "Using provided DATABASE_URL secret"
+            else
+              echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
+              exit 1
+            fi
           fi
       - name: Check DATABASE_URL present and valid
         run: |
@@ -39,6 +41,13 @@ jobs:
             postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
             *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
           esac
+      - name: Run CI preflight check
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: sh ./scripts/check_ci.sh
       - name: Build containers
         run: docker compose build
       - name: Start services
