@@ -8,10 +8,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      # Keep DATABASE_URL at job level; move POSTGRES_* secret access to the
-      # step scope to avoid invalid context access warnings in some linters.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
