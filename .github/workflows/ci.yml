@@ -41,13 +41,21 @@ jobs:
             postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
             *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
           esac
-      - name: Run CI preflight check
+      - name: Run CI preflight check (debug)
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: sh ./scripts/check_ci.sh
+        run: |
+          echo "PWD=$(pwd)"
+          echo "Listing repo root:"
+          ls -la
+          echo "Listing scripts/:"
+          ls -la scripts || true
+          echo "Running preflight with bash..."
+          bash ./scripts/check_ci.sh
+        shell: bash
       - name: Build containers
         run: docker compose build
       - name: Start services
