@@ -2,96 +2,85 @@ name: CI/CD
 on:
   push:
     branches: [main, develop]
-  name: CI/CD
-  on:
-    push:
-      branches: [main, develop]
-    pull_request:
-      branches: [main]
+  pull_request:
+    branches: [main]
 
-  jobs:
-    build-and-test:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-        - name: Construct or override DATABASE_URL from POSTGRES_* secrets
-          env:
-            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          run: |
-            # If POSTGRES_* secrets are provided, use them to build the URL and
-            # override any existing DATABASE_URL so the app inside docker-compose
-            # can resolve the DB host as the Compose service name `db`.
-            if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
-              echo "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}" >> $GITHUB_ENV
-              echo "Constructed DATABASE_URL from POSTGRES_* secrets (overriding provided DATABASE_URL if any)"
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Construct or override DATABASE_URL from POSTGRES_* secrets
+        run: |
+          # If POSTGRES_* secrets are provided, use them to build the URL and
+          # override any existing DATABASE_URL so the app inside docker-compose
+          # can resolve the DB host as the Compose service name `db`.
+          if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
+            echo "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}" >> $GITHUB_ENV
+            echo "Constructed DATABASE_URL from POSTGRES_* secrets (overriding provided DATABASE_URL if any)"
+          else
+            if [ -n "${DATABASE_URL:-}" ]; then
+              echo "Using provided DATABASE_URL secret"
             else
-              if [ -n "${DATABASE_URL:-}" ]; then
-                echo "Using provided DATABASE_URL secret"
-              else
-                echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
-                exit 1
-              fi
-            fi
-        - name: Check DATABASE_URL present and valid
-          run: |
-            if [ -z "${DATABASE_URL:-}" ]; then
-              echo "ERROR: DATABASE_URL is not set in runner environment. Add it as a repository secret (Settings → Secrets → Actions)." >&2
+              echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
               exit 1
             fi
-            case "${DATABASE_URL}" in
-              postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
-              *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
-            esac
-        - name: Run CI preflight check
-          env:
-            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          run: |
-            npm ci --prefer-offline --no-audit --progress=false
-            npm run ci:check
-          shell: bash
-        - name: Build containers
-          run: docker compose build
-        - name: Start services
-          run: docker compose up -d
-        - name: Wait for database
-          run: sleep 15
-        - name: Generate Prisma client
-          run: docker compose exec -T app npm run prisma:generate
-        - name: Run migrations
-          run: docker compose exec -T app npx prisma migrate deploy
-        - name: Build app
-          run: docker compose exec -T app npm run build
-        - name: Tear down
-          if: always()
-          run: docker compose down -v
+          fi
+      - name: Check DATABASE_URL present and valid
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "ERROR: DATABASE_URL is not set in runner environment. Add it as a repository secret (Settings → Secrets → Actions)." >&2
+            exit 1
+          fi
+          case "${DATABASE_URL}" in
+            postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
+            *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
+          esac
+      - name: Run CI preflight check (debug)
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "PWD=$(pwd)"
+          echo "Listing repo root:"
+          ls -la
+          echo "Listing scripts/:"
+          ls -la scripts || true
+          echo "Running preflight with bash..."
+          bash ./scripts/check_ci.sh
+        shell: bash
+      - name: Build containers
+        run: docker compose build
+      - name: Start services
+        run: docker compose up -d
+      - name: Wait for database
+        run: sleep 15
+      - name: Generate Prisma client
+        run: docker compose exec -T app npm run prisma:generate
+      - name: Run migrations
+        run: docker compose exec -T app npx prisma migrate deploy
+      - name: Build app
+        run: docker compose exec -T app npm run build
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
 
-    deploy:
-      needs: build-and-test
-      if: github.ref == 'refs/heads/main'
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy to EC2
-          uses: appleboy/ssh-action@v1
-          with:
-            host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_USER }}
-            key: ${{ secrets.EC2_KEY }}
-            script: |
-              if [ ! -d ~/my-app ]; then
-                git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git ~/my-app
-              fi
-              cd ~/my-app && git pull origin main
-              docker compose down
-              docker compose up --build -d
-
-    # build-and-smoke job intentionally removed — single CI workflow kept
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            if [ ! -d ~/my-app ]; then
               git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git ~/my-app
             fi
             cd ~/my-app && git pull origin main
