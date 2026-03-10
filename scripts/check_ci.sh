@@ -106,11 +106,11 @@ fi
 print "DB ready after ${SECS}s"
 
 if [ "${1:-}" = "--migrate" ]; then
-  print "Running Prisma migrations inside app container"
-  docker compose up -d app
-  # give the app container a moment to initialize before running migrations
-  sleep 2
-  docker compose exec -T app npx prisma migrate deploy
+  print "Running Prisma migrations (one-off run with DATABASE_URL passed)"
+  # Use a one-off run so we can pass DATABASE_URL directly from the environment
+  # into the migration process. This avoids relying on secrets being mounted
+  # into an already-running app container.
+  docker compose run --rm -e DATABASE_URL="$DATABASE_URL" app npx prisma migrate deploy
   EXIT_CODE=$?
   docker compose down
   exit $EXIT_CODE
