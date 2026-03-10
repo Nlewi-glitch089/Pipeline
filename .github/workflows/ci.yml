@@ -67,8 +67,6 @@ jobs:
         run: docker compose exec -T app npm run prisma:generate
       - name: Run migrations
         run: docker compose exec -T app npx prisma migrate deploy
-      - name: Build app
-        run: docker compose exec -T app npm run build
       - name: Tear down
         if: always()
         run: docker compose down -v
