@@ -44,6 +44,18 @@ if ! docker compose version >/dev/null 2>&1; then
   print "ERROR: docker compose not available or not configured"; exit 2
 fi
 
+# If no `secrets/` directory exists (e.g. in CI), populate it from the
+# committed `secrets.example/` files so docker-compose can mount secrets.
+if [ ! -d ./secrets ]; then
+  if [ -d ./secrets.example ]; then
+    print "No secrets/ found — copying example secrets for CI"
+    mkdir -p ./secrets
+    cp -n ./secrets.example/* ./secrets/ || true
+  else
+    print "No secrets/ or secrets.example/ found — continuing without secrets"
+  fi
+fi
+
 print "Building images (only app image will be built)..."
 docker compose build --pull
 
