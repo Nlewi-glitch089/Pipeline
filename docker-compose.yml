@@ -8,6 +8,12 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-appdb}
+    # Read POSTGRES_* values from secrets if present, then run the official entrypoint.
+    entrypoint: ["/bin/sh", "-c", "if [ -f /run/secrets/postgres_user ]; then export POSTGRES_USER=$(cat /run/secrets/postgres_user); fi; if [ -f /run/secrets/postgres_password ]; then export POSTGRES_PASSWORD=$(cat /run/secrets/postgres_password); fi; if [ -f /run/secrets/postgres_db ]; then export POSTGRES_DB=$(cat /run/secrets/postgres_db); fi; exec docker-entrypoint.sh postgres"]
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-postgres} -d $${POSTGRES_DB:-appdb} -h localhost -p 5432"]
       interval: 5s
@@ -22,7 +28,8 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      DATABASE_URL: ${DATABASE_URL}
+    # The app's entrypoint will load DATABASE_URL from secrets mounted
+    # at /run/secrets/database_url or construct it from the postgres_* secrets.
     depends_on:
       db:
         condition: service_healthy
@@ -32,6 +39,21 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    secrets:
+      - database_url
+      - postgres_user
+      - postgres_password
+      - postgres_db
 
 volumes:
   db-data:
+
+secrets:
+  database_url:
+    file: ./secrets/database_url.txt
+  postgres_user:
+    file: ./secrets/postgres_user.txt
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  postgres_db:
+    file: ./secrets/postgres_db.txt
