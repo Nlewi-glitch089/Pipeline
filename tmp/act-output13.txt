@@ -1,0 +1,54 @@
+[CI/CD/build-and-test] ⭐ Run Set up job
+[CI/CD/build-and-test] 🚀  Start image=node:20-bullseye
+[CI/CD/build-and-test]   🐳  docker pull image=node:20-bullseye platform= username= forcePull=true
+[CI/CD/build-and-test] using DockerAuthConfig authentication for docker pull
+[CI/CD/build-and-test]   🐳  docker create image=node:20-bullseye platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test]   🐳  docker run image=node:20-bullseye platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[CI/CD/build-and-test]   ✅  Success - Set up job
+[CI/CD/build-and-test]   ☁  git clone 'https://github.com/actions/setup-node' # ref=v4
+[CI/CD/build-and-test] ⭐ Run Main Checkout code
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\BrightPath\Pipeline\. dst=/mnt/c/Users/Launchpad8/BrightPath/Pipeline
+[CI/CD/build-and-test]   ✅  Success - Main Checkout code [458.2546ms]
+[CI/CD/build-and-test] ⭐ Run Main Setup Node
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/ dst=/var/run/act/actions/actions-setup-node@v4/
+[CI/CD/build-and-test]   🐳  docker exec cmd=[/usr/local/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js] user= workdir=
+[CI/CD/build-and-test]   | Attempting to download 20...
+[CI/CD/build-and-test]   | Acquiring 20.20.1 - x64 from https://github.com/actions/node-versions/releases/download/20.20.1-22746716736/node-20.20.1-linux-x64.tar.gz
+[CI/CD/build-and-test]   | Extracting ...
+[CI/CD/build-and-test]   | [command]/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /tmp/301c2a0e-f4a9-4499-af98-8cf6746d7cfb -f /tmp/3f47769d-6874-4dc5-83e1-663cc4461042
+[CI/CD/build-and-test]   | Adding to the cache ...
+[CI/CD/build-and-test]   ❓  ::group::Environment details
+[CI/CD/build-and-test]   | node: v20.20.1
+[CI/CD/build-and-test]   | npm: 10.8.2
+[CI/CD/build-and-test]   | yarn: 1.22.22
+[CI/CD/build-and-test]   ❓  ::endgroup::
+[CI/CD/build-and-test]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/tsc.json
+[CI/CD/build-and-test]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/eslint-stylish.json
+[CI/CD/build-and-test]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/eslint-compact.json
+[CI/CD/build-and-test]   ✅  Success - Main Setup Node [22.3405653s]
+[CI/CD/build-and-test]   ⚙  ::set-output:: node-version=v20.20.1
+[CI/CD/build-and-test]   ⚙  ::add-path:: /opt/hostedtoolcache/node/20.20.1/x64/bin
+[CI/CD/build-and-test] ⭐ Run Main Install dependencies
+[CI/CD/build-and-test]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/2] user= workdir=
+[CI/CD/build-and-test]   | 
+[CI/CD/build-and-test]   | added 41 packages, and audited 42 packages in 18s
+[CI/CD/build-and-test]   | 
+[CI/CD/build-and-test]   | 8 packages are looking for funding
+[CI/CD/build-and-test]   |   run `npm fund` for details
+[CI/CD/build-and-test]   | 
+[CI/CD/build-and-test]   | found 0 vulnerabilities
+[CI/CD/build-and-test]   ✅  Success - Main Install dependencies [18.2027764s]
+[CI/CD/build-and-test] ⭐ Run Main Construct or override DATABASE_URL from POSTGRES_* secrets
+[CI/CD/build-and-test]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/3] user= workdir=
+[CI/CD/build-and-test]   | ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available
+[CI/CD/build-and-test]   ❌  Failure - Main Construct or override DATABASE_URL from POSTGRES_* secrets [321.5437ms]
+[CI/CD/build-and-test] exitcode '1': failure
+[CI/CD/build-and-test] ⭐ Run Main Tear down
+[CI/CD/build-and-test]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/10] user= workdir=
+[CI/CD/build-and-test]   | /var/run/act/workflow/10: line 2: docker: command not found
+[CI/CD/build-and-test]   ❌  Failure - Main Tear down [285.7614ms]
+[CI/CD/build-and-test] exitcode '127': command not found, please refer to https://github.com/nektos/act/issues/107 for more information
+[CI/CD/build-and-test] ⭐ Run Complete job
+[CI/CD/build-and-test]   ✅  Success - Complete job
+[CI/CD/build-and-test] 🏁  Job failed

@@ -1,0 +1,601 @@
+time="2026-03-11T14:10:35-04:00" level=debug msg="Handling container host and socket"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Conditional GET for notices etag=5263e60a-e791-4caf-a6ca-1d3d50883728"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Defaulting container socket to DOCKER_HOST"
+time="2026-03-11T14:10:35-04:00" level=info msg="Using docker host 'npipe:////./pipe/docker_engine', and daemon socket 'npipe:////./pipe/docker_engine'"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading environment from C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.env"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading action inputs from C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.input"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading secrets from C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.secrets"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading vars from C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.vars"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Evaluated matrix inclusions: map[]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading workflow 'C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.github\\workflows\\ci.yml'"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Reading workflow 'C:\\Users\\Launchpad8\\BrightPath\\Pipeline\\.github\\workflows\\ci.yml'"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Preparing plan with all jobs"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Using default workflow event: push"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Planning jobs for event: push"
+time="2026-03-11T14:10:35-04:00" level=debug msg="gc: 2026-03-11 14:10:35.1988931 -0400 EDT m=+0.222557501" module=artifactcache
+time="2026-03-11T14:10:35-04:00" level=debug msg="Plan Stages: [0xc0004c0c00]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Stages Runs: [build-and-test]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Name: build-and-test"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.RawNeeds: {0 0    <nil> []    0 0}"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.RawRunsOn: {8 0 !!str ubuntu-latest  <nil> []    10 14}"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Env: {4 0 !!map   <nil> [0xc0002fef00 0xc0002fefa0 0xc0002ff040 0xc0002ff0e0 0xc0002ff180 0xc0002ff220 0xc0002ff2c0 0xc0002ff360]    12 7}"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.If: {0 0  success()  <nil> []    0 0}"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Checkout code"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Setup Node"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Install dependencies"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Construct or override DATABASE_URL from POSTGRES_* secrets"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Check DATABASE_URL present and valid"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Run smoke tests"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Build containers"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Start services"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Wait for database readiness"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Apply migrations (full smoke)"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Steps: Tear down"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.TimeoutMinutes: "
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Services: map[]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Strategy: <nil>"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.RawContainer: {0 0    <nil> []    0 0}"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Defaults.Run.Shell: "
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Defaults.Run.WorkingDirectory: "
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Outputs: map[]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Uses: "
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.With: map[]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job.Result: "
+time="2026-03-11T14:10:35-04:00" level=debug msg="Empty Strategy, matrixes=[map[]]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Job Matrices: [map[]]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Runner Matrices: map[]"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Final matrix after applying user inclusions '[map[]]'"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Loading revision from git directory"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33"
+time="2026-03-11T14:10:35-04:00" level=debug msg="HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'"
+time="2026-03-11T14:10:35-04:00" level=debug msg="using github ref: refs/heads/main"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Detected CPUs: 12"
+time="2026-03-11T14:10:35-04:00" level=debug msg="PlanExecutor concurrency: 12"
+time="2026-03-11T14:10:35-04:00" level=debug msg="Detected CPUs: 12"
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'success()'
+[CI/CD/build-and-test] [DEBUG] expression 'success()' evaluated to 'true'
+[CI/CD/build-and-test] ⭐ Run Set up job
+[CI/CD/build-and-test] 🚀  Start image=nektos/act-environments-ubuntu:18.04
+time="2026-03-11T14:10:35-04:00" level=debug msg="Parallel tasks (0) below minimum, setting to 1"
+[CI/CD/build-and-test]   🐳  docker pull image=nektos/act-environments-ubuntu:18.04 platform= username= forcePull=true
+[CI/CD/build-and-test] [DEBUG]   🐳  docker pull nektos/act-environments-ubuntu:18.04
+[CI/CD/build-and-test] [DEBUG] pulling image 'docker.io/nektos/act-environments-ubuntu:18.04' ()
+[CI/CD/build-and-test] using DockerAuthConfig authentication for docker pull
+[CI/CD/build-and-test] [DEBUG] Pulling from nektos/act-environments-ubuntu :: 18.04
+time="2026-03-11T14:10:35-04:00" level=debug msg="Saving notices etag=5263e60a-e791-4caf-a6ca-1d3d50883728"
+time="2026-03-11T14:10:35-04:00" level=debug msg="No new notices"
+[CI/CD/build-and-test] [DEBUG] Pulling fs layer :: e5e1946d6282
+[CI/CD/build-and-test] [DEBUG] Digest: sha256:4d991875312e2ad084ff5350aa193e8a7dbdc4c144476d48df6a69e1e3404427 :: 
+[CI/CD/build-and-test] [DEBUG] Status: Downloaded newer image for nektos/act-environments-ubuntu:18.04 :: 
+time="2026-03-11T14:14:48-04:00" level=debug msg="Parallel tasks (0) below minimum, setting to 1"
+[CI/CD/build-and-test]   🐳  docker create image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test] [DEBUG] Common container.Config ==> &{Hostname: Domainname: User: AttachStdin:false AttachStdout:false AttachStderr:false ExposedPorts:map[] Tty:false OpenStdin:false StdinOnce:false Env:[RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8] Cmd:[] Healthcheck:<nil> ArgsEscaped:false Image:nektos/act-environments-ubuntu:18.04 Volumes:map[] WorkingDir:/mnt/c/Users/Launchpad8/BrightPath/Pipeline Entrypoint:[] NetworkDisabled:false MacAddress: OnBuild:[] Labels:map[] StopSignal: StopTimeout:<nil> Shell:[]}
+[CI/CD/build-and-test] [DEBUG] Common container.HostConfig ==> &{Binds:[/var/run/docker.sock:/var/run/docker.sock] ContainerIDFile: LogConfig:{Type: Config:map[]} NetworkMode:host PortBindings:map[] RestartPolicy:{Name: MaximumRetryCount:0} AutoRemove:false VolumeDriver: VolumesFrom:[] ConsoleSize:[0 0] Annotations:map[] CapAdd:[] CapDrop:[] CgroupnsMode: DNS:[] DNSOptions:[] DNSSearch:[] ExtraHosts:[] GroupAdd:[] IpcMode: Cgroup: Links:[] OomScoreAdj:0 PidMode: Privileged:false PublishAllPorts:false ReadonlyRootfs:false SecurityOpt:[] StorageOpt:map[] Tmpfs:map[] UTSMode: UsernsMode: ShmSize:0 Sysctls:map[] Runtime: Isolation: Resources:{CPUShares:0 Memory:0 NanoCPUs:0 CgroupParent: BlkioWeight:0 BlkioWeightDevice:[] BlkioDeviceReadBps:[] BlkioDeviceWriteBps:[] BlkioDeviceReadIOps:[] BlkioDeviceWriteIOps:[] CPUPeriod:0 CPUQuota:0 CPURealtimePeriod:0 CPURealtimeRuntime:0 CpusetCpus: CpusetMems: Devices:[] DeviceCgroupRules:[] DeviceRequests:[] KernelMemory:0 KernelMemoryTCP:0 MemoryReservation:0 MemorySwap:0 MemorySwappiness:<nil> OomKillDisable:<nil> PidsLimit:<nil> Ulimits:[] CPUCount:0 CPUPercent:0 IOMaximumIOps:0 IOMaximumBandwidth:0} Mounts:[{Type:volume Source:act-toolcache Target:/opt/hostedtoolcache ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> ImageOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:act-CI-CD-build-and-test-ae71c630e87b3d02654f452679564a312305fa1dd80bd657616c11013c36e3b7-env Target:/var/run/act ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> ImageOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>} {Type:volume Source:act-CI-CD-build-and-test-ae71c630e87b3d02654f452679564a312305fa1dd80bd657616c11013c36e3b7 Target:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ReadOnly:false Consistency: BindOptions:<nil> VolumeOptions:<nil> ImageOptions:<nil> TmpfsOptions:<nil> ClusterOptions:<nil>}] MaskedPaths:[] ReadonlyPaths:[] Init:<nil>}
+[CI/CD/build-and-test] [DEBUG] input.NetworkAliases ==> [build-and-test]
+[CI/CD/build-and-test] [DEBUG] Created container name=act-CI-CD-build-and-test-ae71c630e87b3d02654f452679564a312305fa1dd80bd657616c11013c36e3b7 id=4dbe079172265f9cab0b2079e67f7a00ccc5aad33df462af5993d7e3ca16d440 from image nektos/act-environments-ubuntu:18.04 (platform: )
+[CI/CD/build-and-test] [DEBUG] ENV ==> [RUNNER_TOOL_CACHE=/opt/hostedtoolcache RUNNER_OS=Linux RUNNER_ARCH=X64 RUNNER_TEMP=/tmp LANG=C.UTF-8]
+[CI/CD/build-and-test]   🐳  docker run image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test] [DEBUG] Starting container: 4dbe079172265f9cab0b2079e67f7a00ccc5aad33df462af5993d7e3ca16d440
+[CI/CD/build-and-test] [DEBUG] Started container: 4dbe079172265f9cab0b2079e67f7a00ccc5aad33df462af5993d7e3ca16d440
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/event.json len:2
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/envs.txt len:0
+[CI/CD/build-and-test] [DEBUG] Extracting content to '/var/run/act/'
+time="2026-03-11T14:15:49-04:00" level=debug msg="Parallel tasks (0) below minimum, setting to 1"
+[CI/CD/build-and-test]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[CI/CD/build-and-test] [DEBUG] Exec command '[node --no-warnings -e console.log(process.execPath)]'
+[CI/CD/build-and-test] [DEBUG] Working directory '/mnt/c/Users/Launchpad8/BrightPath/Pipeline'
+[CI/CD/build-and-test]   ✅  Success - Set up job
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.POSTGRES_USER }}' rewritten to 'format('{0}', secrets.POSTGRES_USER)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.POSTGRES_USER)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.POSTGRES_USER)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.POSTGRES_PASSWORD }}' rewritten to 'format('{0}', secrets.POSTGRES_PASSWORD)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.POSTGRES_PASSWORD)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.POSTGRES_PASSWORD)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.POSTGRES_DB }}' rewritten to 'format('{0}', secrets.POSTGRES_DB)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.POSTGRES_DB)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.POSTGRES_DB)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.DATABASE_URL }}' rewritten to 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.DATABASE_URL)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Skipping local actions/checkout because workdir was already copied
+[CI/CD/build-and-test] [DEBUG] skip pre step for 'Checkout code': no action model available
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test]   ☁  git clone 'https://github.com/actions/setup-node' # ref=v4
+[CI/CD/build-and-test] [DEBUG]   cloning https://github.com/actions/setup-node to C:\Users\Launchpad8\.cache\act/actions-setup-node@v4
+[CI/CD/build-and-test] [DEBUG] Cloned https://github.com/actions/setup-node to C:\Users\Launchpad8\.cache\act/actions-setup-node@v4
+[CI/CD/build-and-test] [DEBUG] Checked out v4
+[CI/CD/build-and-test] [DEBUG] Read action &{Setup Node.js environment GitHub Setup a Node.js environment by adding problem matchers and optionally downloading and adding it to the PATH. map[always-auth:{Set always-auth in npmrc. false false} architecture:{Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default. false } cache:{Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm. false } cache-dependency-path:{Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies. false } check-latest:{Set this option if you want the action to check for the latest available version that satisfies the version spec. false false} mirror:{Used to specify an alternative mirror to downlooad Node.js binaries from false } mirror-token:{The token used as Authorization header when fetching from the mirror false } node-version:{Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0. false } node-version-file:{File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions. false } registry-url:{Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN. false } scope:{Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/). false } token:{Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting. false ${{ github.server_url == 'https://github.com' && github.token || '' }}}] map[cache-hit:{A boolean value to indicate if a cache was hit. } node-version:{The installed node version. }] {node20 map[] dist/setup/index.js  always() dist/cache-save/index.js success()     [] []} { }} from 'Unknown'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Skipping local actions/checkout because workdir was already copied
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:0 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF:v4 GITHUB_ACTION_REPOSITORY:actions/checkout GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'true'
+[CI/CD/build-and-test] ⭐ Run Main Checkout code
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/outputcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/statecmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/pathcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/envs.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/SUMMARY.md len:0
+[CI/CD/build-and-test] [DEBUG] Extracting content to '/var/run/act'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\BrightPath\Pipeline\. dst=/mnt/c/Users/Launchpad8/BrightPath/Pipeline
+[CI/CD/build-and-test] [DEBUG] Writing tarball C:\Users\LAUNCH~1\AppData\Local\Temp\act2511740162 from C:\Users\Launchpad8\BrightPath\Pipeline\.
+[CI/CD/build-and-test] [DEBUG] Stripping prefix:C:\Users\Launchpad8\BrightPath\Pipeline\ src:C:\Users\Launchpad8\BrightPath\Pipeline\.
+[CI/CD/build-and-test] [DEBUG] Extracting content from 'C:\Users\LAUNCH~1\AppData\Local\Temp\act2511740162' to '/mnt/c/Users/Launchpad8/BrightPath/Pipeline'
+[CI/CD/build-and-test]   ✅  Success - Main Checkout code [140.9715ms]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:1 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF:v4 GITHUB_ACTION_REPOSITORY:actions/setup-node GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline INPUT_NODE-VERSION:20 ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'true'
+[CI/CD/build-and-test] ⭐ Run Main Setup Node
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/outputcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/statecmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/pathcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/envs.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/SUMMARY.md len:0
+[CI/CD/build-and-test] [DEBUG] Extracting content to '/var/run/act'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] About to run action &{Setup Node.js environment GitHub Setup a Node.js environment by adding problem matchers and optionally downloading and adding it to the PATH. map[always-auth:{Set always-auth in npmrc. false false} architecture:{Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default. false } cache:{Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm. false } cache-dependency-path:{Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies. false } check-latest:{Set this option if you want the action to check for the latest available version that satisfies the version spec. false false} mirror:{Used to specify an alternative mirror to downlooad Node.js binaries from false } mirror-token:{The token used as Authorization header when fetching from the mirror false } node-version:{Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0. false } node-version-file:{File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions. false } registry-url:{Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN. false } scope:{Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/). false } token:{Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting. false ${{ github.server_url == 'https://github.com' && github.token || '' }}}] map[cache-hit:{A boolean value to indicate if a cache was hit. } node-version:{The installed node version. }] {node20 map[] dist/setup/index.js  always() dist/cache-save/index.js success()     [] []} { }}
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] expression '${{ github.server_url == 'https://github.com' && github.token || '' }}' rewritten to 'format('{0}', github.server_url == 'https://github.com' && github.token || '')'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', github.server_url == 'https://github.com' && github.token || '')'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', github.server_url == 'https://github.com' && github.token || '')' evaluated to '%!t(string=***)'
+[CI/CD/build-and-test] [DEBUG] type=remote-action actionDir=C:\Users\Launchpad8\.cache\act/actions-setup-node@v4 actionPath= workdir=C:\Users\Launchpad8\BrightPath\Pipeline actionCacheDir=C:\Users\Launchpad8\.cache\act actionName=actions-setup-node@v4 containerActionDir=/var/run/act/actions/actions-setup-node@v4
+[CI/CD/build-and-test] [DEBUG] /var/run/act/actions/actions-setup-node@v4
+[CI/CD/build-and-test] [DEBUG] Removing C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/.gitignore before docker cp
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/ dst=/var/run/act/actions/actions-setup-node@v4/
+[CI/CD/build-and-test] [DEBUG] Writing tarball C:\Users\LAUNCH~1\AppData\Local\Temp\act1353826271 from C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/
+[CI/CD/build-and-test] [DEBUG] Stripping prefix:C:\Users\Launchpad8\.cache\act\actions-setup-node@v4\ src:C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/
+[CI/CD/build-and-test] [DEBUG] Extracting content from 'C:\Users\LAUNCH~1\AppData\Local\Temp\act1353826271' to '/var/run/act/actions/actions-setup-node@v4/'
+[CI/CD/build-and-test] [DEBUG] executing remote job container: [/usr/local/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js]
+[CI/CD/build-and-test]   🐳  docker exec cmd=[/usr/local/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js] user= workdir=
+[CI/CD/build-and-test] [DEBUG] Exec command '[/usr/local/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js]'
+[CI/CD/build-and-test] [DEBUG] Working directory '/mnt/c/Users/Launchpad8/BrightPath/Pipeline'
+[CI/CD/build-and-test]   | /run/act/actions/actions-setup-node@v4/dist/setup/index.js:68747
+[CI/CD/build-and-test]   |       const responseObject = new Response(response.body?.source ?? null)
+[CI/CD/build-and-test]   |                                                         ^
+[CI/CD/build-and-test]   | 
+[CI/CD/build-and-test]   | SyntaxError: Unexpected token '.'
+[CI/CD/build-and-test]   |     at wrapSafe (internal/modules/cjs/loader.js:1072:16)
+[CI/CD/build-and-test]   |     at Module._compile (internal/modules/cjs/loader.js:1122:27)
+[CI/CD/build-and-test]   |     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10)
+[CI/CD/build-and-test]   |     at Module.load (internal/modules/cjs/loader.js:1002:32)
+[CI/CD/build-and-test]   |     at Function.Module._load (internal/modules/cjs/loader.js:901:14)
+[CI/CD/build-and-test]   |     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)
+[CI/CD/build-and-test]   |     at internal/main/run_main_module.js:18:47
+[CI/CD/build-and-test]   ❌  Failure - Main Setup Node [5.3840742s]
+[CI/CD/build-and-test] exitcode '1': failure
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:2 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Install dependencies' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:3 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Construct or override DATABASE_URL from POSTGRES_* secrets' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:4 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Check DATABASE_URL present and valid' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:5 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Run smoke tests' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:6 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Build containers' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:7 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Start services' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.DATABASE_URL }}' rewritten to 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.DATABASE_URL)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:8 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Wait for database readiness' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] expression '${{ secrets.DATABASE_URL }}' rewritten to 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'format('{0}', secrets.DATABASE_URL)'
+[CI/CD/build-and-test] [DEBUG] expression 'format('{0}', secrets.DATABASE_URL)' evaluated to '%!t(string=)'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:9 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression ''
+[CI/CD/build-and-test] [DEBUG] expression '' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Apply migrations (full smoke)' due to ''
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:10 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF: GITHUB_ACTION_REPOSITORY: GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'always()'
+[CI/CD/build-and-test] [DEBUG] expression 'always()' evaluated to 'true'
+[CI/CD/build-and-test] ⭐ Run Main Tear down
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/outputcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/statecmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/pathcmd.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/envs.txt len:0
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/SUMMARY.md len:0
+[CI/CD/build-and-test] [DEBUG] Extracting content to '/var/run/act'
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Wrote command 
+
+docker compose down -v
+
+ to 'workflow/10'
+[CI/CD/build-and-test] [DEBUG] Writing entry to tarball workflow/10 len:24
+[CI/CD/build-and-test] [DEBUG] Extracting content to '/var/run/act'
+[CI/CD/build-and-test]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/10] user= workdir=
+[CI/CD/build-and-test] [DEBUG] Exec command '[bash -e /var/run/act/workflow/10]'
+[CI/CD/build-and-test] [DEBUG] Working directory '/mnt/c/Users/Launchpad8/BrightPath/Pipeline'
+[CI/CD/build-and-test]   | Docker version 3.0.10+azure, build 99c5edceb48d64c1aa5d09b8c9c499d431d98bb9
+[CI/CD/build-and-test]   ✅  Success - Main Tear down [441.9616ms]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] setupEnv => map[ACT:true ACTIONS_CACHE_URL:http://10.0.0.59:54633/ CI:true DATABASE_URL: GITHUB_ACTION:1 GITHUB_ACTIONS:true GITHUB_ACTION_PATH: GITHUB_ACTION_REF:v4 GITHUB_ACTION_REPOSITORY:actions/setup-node GITHUB_ACTOR:nektos/act GITHUB_API_URL:https://api.github.com GITHUB_BASE_REF: GITHUB_ENV:/var/run/act/workflow/envs.txt GITHUB_EVENT_NAME:push GITHUB_EVENT_PATH:/var/run/act/workflow/event.json GITHUB_GRAPHQL_URL:https://api.github.com/graphql GITHUB_HEAD_REF: GITHUB_JOB:build-and-test GITHUB_OUTPUT:/var/run/act/workflow/outputcmd.txt GITHUB_PATH:/var/run/act/workflow/pathcmd.txt GITHUB_REF:refs/heads/main GITHUB_REF_NAME:main GITHUB_REF_TYPE:branch GITHUB_REPOSITORY:Nlewi-glitch089/Pipeline GITHUB_REPOSITORY_OWNER:Nlewi-glitch089 GITHUB_RETENTION_DAYS:0 GITHUB_RUN_ATTEMPT:1 GITHUB_RUN_ID:1 GITHUB_RUN_NUMBER:1 GITHUB_SERVER_URL:https://github.com GITHUB_SHA:c1a83bc2020ec74d512afeb9e65594e7e2c48f33 GITHUB_STATE:/var/run/act/workflow/statecmd.txt GITHUB_STEP_SUMMARY:/var/run/act/workflow/SUMMARY.md GITHUB_WORKFLOW:CI/CD GITHUB_WORKSPACE:/mnt/c/Users/Launchpad8/BrightPath/Pipeline INPUT_NODE-VERSION:20 ImageOS:ubuntu20 POSTGRES_DB: POSTGRES_PASSWORD: POSTGRES_USER: RUNNER_PERFLOG:/dev/null RUNNER_TRACKING_ID:]
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] evaluating expression 'success()'
+[CI/CD/build-and-test] [DEBUG] expression 'success()' evaluated to 'false'
+[CI/CD/build-and-test] [DEBUG] Skipping step 'Setup Node' due to 'success()'
+[CI/CD/build-and-test] [DEBUG] skipping post step for 'Checkout code': no action model available
+[CI/CD/build-and-test] ⭐ Run Complete job
+[CI/CD/build-and-test] [DEBUG] Loading revision from git directory
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test] [DEBUG] HEAD points to 'c1a83bc2020ec74d512afeb9e65594e7e2c48f33'
+[CI/CD/build-and-test] [DEBUG] using github ref: refs/heads/main
+[CI/CD/build-and-test] [DEBUG] Found revision: c1a83bc2020ec74d512afeb9e65594e7e2c48f33
+[CI/CD/build-and-test]   ✅  Success - Complete job
+[CI/CD/build-and-test] 🏁  Job failed
+Error: Job 'build-and-test' failed

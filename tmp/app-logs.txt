@@ -1,0 +1,10 @@
+app-1  | 
+app-1  | > pipeline-app@1.0.0 start
+app-1  | > next start -p 3000
+app-1  | 
+app-1  | ▲ Next.js 16.1.6
+app-1  | - Local:         http://localhost:3000
+app-1  | - Network:       http://172.21.0.3:3000
+app-1  | 
+app-1  | ✓ Starting...
+app-1  | ✓ Ready in 399ms

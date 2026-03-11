@@ -27,14 +27,23 @@ docker compose up -d
 
 - Copy `.env.example` to `.env` and adjust secrets (not recommended for committing to VCS).
 
-3. Generate Prisma client and run migrations inside the running app container:
+3. Apply database schema migrations
+
+This project no longer uses Prisma for migrations. A SQL baseline is provided and can be applied to any Postgres-compatible host (including Neon).
+
+Locally (applies baseline SQL using the `postgres` client container):
 
 ```bash
-docker compose exec app npm run prisma:generate
-# For development migrations (creates migration files):
-docker compose exec app npx prisma migrate dev --name init
-# For applying production migrations:
-docker compose exec app npm run prisma:migrate
+# set your DATABASE_URL to point at your DB (Neon or other)
+export DATABASE_URL="postgresql://<user>:<pw>@<host>:5432/<db>"
+./scripts/apply_sql_migration_neon.sh
+```
+
+Or run the idempotent migration runner which tracks applied migrations in the database:
+
+```bash
+export DATABASE_URL="postgresql://<user>:<pw>@<host>:5432/<db>"
+./scripts/apply_sql_migration_neon.sh
 ```
 
 Verify
@@ -102,7 +111,33 @@ This repo includes a CI workflow at `.github/workflows/ci.yml` that:
 Secrets (add these in your repo: Settings → Secrets and variables → Actions):
 
 - `DATABASE_URL` — used by the `build-and-test` job.
-- `EC2_HOST`, `EC2_USER`, `EC2_KEY` — used by the `deploy` job for SSH deploy.
+
+Note: The repository previously included an automated SSH `deploy` job that pushed containers to an EC2 host. That job has been removed to simplify CI and local development. To reintroduce an EC2 SSH deploy in future, you can add a `deploy` job that uses an SSH action and the following secrets: `EC2_HOST`, `EC2_USER`, `EC2_KEY`.
+
+Suggested future-implementation (example):
+
+1. Add repository secrets: `EC2_HOST`, `EC2_USER`, `EC2_KEY` (private key).
+2. Add a `deploy` job (runs-on: `ubuntu-latest`) which runs after `build-and-test` and only on `main`.
+3. Use a well-maintained SSH action (e.g., `appleboy/ssh-action`) to run a small deploy script on the EC2 host:
+
+```bash
+# Example actions step (conceptual):
+## - name: Deploy to EC2
+##   uses: appleboy/ssh-action@v1
+##   with:
+##     host: ${{ secrets.EC2_HOST }}
+##     username: ${{ secrets.EC2_USER }}
+##     key: ${{ secrets.EC2_KEY }}
+##     script: |
+##       cd ~/my-app || git clone https://github.com/YOUR-ORG/YOUR-REPO.git ~/my-app
+##       cd ~/my-app && git pull origin main
+##       docker compose down && docker compose up --build -d
+```
+
+Security notes for future EC2 deploys:
+- Use a dedicated deploy user/key and restrict key access to the runner only.
+- Consider using a bastion host or temporary short-lived credentials instead of a long-lived private key.
+- Prefer cloud provider deployment primitives (ECS, EKS, or managed App Runner) or a CI/CD-specific deploy runner where possible.
 
 Important notes:
 

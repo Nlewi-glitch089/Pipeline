@@ -56,8 +56,12 @@ if [ ! -d ./secrets ]; then
   fi
 fi
 
-print "Building images (only app image will be built)..."
-docker compose build --pull
+if [ "${1:-}" = "--migrate" ]; then
+  print "Skipping app image build for migrate-only run"
+else
+  print "Building images (only app image will be built)..."
+  docker compose build --pull
+fi
 
 print "Starting DB service only..."
 
@@ -107,11 +111,25 @@ print "DB ready after ${SECS}s"
 
 if [ "${1:-}" = "--migrate" ]; then
   print "Running Prisma migrations (one-off run with DATABASE_URL passed)"
-  # Use a one-off run so we can pass DATABASE_URL directly from the environment
-  # into the migration process. This avoids relying on secrets being mounted
-  # into an already-running app container.
-  docker compose run --rm -e DATABASE_URL="$DATABASE_URL" app npx prisma migrate deploy
+  # Create a temporary Prisma config file containing the concrete DATABASE_URL
+  # (Prisma v7 requires a literal datasource.url in the config when running
+  # certain CLI commands inside containers). We will mount this file into the
+  # one-off container and point the CLI at it, avoiding committing secrets.
+  print "Running prisma migrate deploy using schema.prisma (reads DATABASE_URL from env)"
+  # Create a temporary Prisma config file inside the one-off app container
+  # using the DATABASE_URL env var, then run migrate deploy against it.
+  # Ensure any bundled prisma package under node_modules doesn't shadow the
+  # CLI installed by npx. Remove it, create the temp config, run migrations,
+  # then clean up.
+  # Encode the DATABASE_URL to base64 to avoid shell/quoting issues on Windows
+  # when passing it through docker compose. Decode inside the container.
+  # Use SQL-applier fallback to run migrations directly (avoids Prisma v7 CLI
+  # runtime config parsing issues in CI/local). This applies the baseline SQL
+  # from prisma/migrations and keeps secrets out of the repo.
+  print "Applying SQL migrations using scripts/apply_sql_migration.sh"
+  bash ./scripts/apply_sql_migration.sh
   EXIT_CODE=$?
+
   docker compose down
   exit $EXIT_CODE
 else

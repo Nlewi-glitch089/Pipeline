@@ -1,0 +1,7 @@
+[CI/CD/build-and-test] ⭐ Run Set up job
+[CI/CD/build-and-test] 🚀  Start image=nektos/act-environments-ubuntu:20.04
+[CI/CD/build-and-test]   🐳  docker pull image=nektos/act-environments-ubuntu:20.04 platform= username= forcePull=true
+[CI/CD/build-and-test] using DockerAuthConfig authentication for docker pull
+[CI/CD/build-and-test] Error response from daemon: failed to resolve reference "docker.io/nektos/act-environments-ubuntu:20.04": docker.io/nektos/act-environments-ubuntu:20.04: not found
+[CI/CD/build-and-test]   ❌  Failure - Set up job
+[CI/CD/build-and-test] 🏁  Job failed
