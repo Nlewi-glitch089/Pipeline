@@ -55,7 +55,7 @@ jobs:
       - name: Run smoke tests
         run: |
           echo "Running smoke tests (non-invasive)"
-          npm test
+          node ./scripts/test/smoke.js
         shell: bash
       - name: Build containers
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
@@ -88,8 +88,8 @@ jobs:
             echo "ERROR: DATABASE_URL is not set" >&2
             exit 1
           fi
-          echo "Running full smoke: npm test -- --full"
-          npm test -- --full
+          echo "Running full smoke: node ./scripts/test/smoke.js --full"
+          node ./scripts/test/smoke.js --full
       - name: Tear down
         if: ${{ always() && env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose down -v

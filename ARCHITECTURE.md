@@ -11,22 +11,16 @@ The repository is primarily a full-stack Next.js application with Prisma for dat
 [Project Root]/
 - App-Features.md
 - BRANCHING-STRATEGY.md
-- Dockerfile
+The repository is primarily a full-stack Next.js application that uses PostgreSQL for data persistence and Docker tooling for local development and deployment.
 - docker-compose.yml
 - package.json
-- prisma/                # Prisma schema and DB migrations
-  - schema.prisma
-- pages/                 # Next.js pages (frontend + API routes if any)
-  - index.js
-- public/                # Static assets served by Next.js
-- secrets/               # Local secret artifacts (should not be committed)
-- SECRETS.md             # Local guidance for secrets management
+- scripts/sql/           # SQL migrations and baseline
 - README.md
 - ARCHITECTURE.md        # (this file)
-
+This document is a living template to help contributors and agents rapidly understand the codebase structure, key components, data flows, and operational considerations. Update this file as the project evolves.
 Notes:
 - The presence of `pages/` suggests Next.js for the UI and possibly server-side/API routes.
-- `prisma/schema.prisma` indicates PostgreSQL (or compatible) is used via Prisma ORM.
+This repository includes a minimal Next.js app plus a PostgreSQL service and a Docker Compose setup configured for reliable local development.
 - `Dockerfile` and `docker-compose.yml` provide containerized development and deployment patterns.
 
 ## 2. High-Level System Diagram
@@ -35,23 +29,25 @@ Text diagram (simple):
 
 [User] <--> [Next.js Frontend (pages/)] <--> [Server/API (Next.js API routes or separate Node service)] <--> [Postgres (Prisma)]
 
-Docker and CI/CD wrap the app for builds and deployments; external integrations (if any) sit alongside the backend services.
+Description: Handles business logic and data access. This can be implemented as Next.js API routes (inside `pages/api` if present) or as a separate Node/Express service. It accesses the primary PostgreSQL database directly using SQL or a lightweight DB client.
 
 ## 3. Core Components
 
 ### 3.1. Frontend
-
+Type: PostgreSQL (compatible with Neon or other hosted Postgres providers)
 Name: Web Application (Next.js)
 
-Description: The primary user interface. Implements pages and UI logic inside `pages/` and static assets in `public/`. It may include server-side rendering (SSR), static rendering (SSG), and API routes when using Next.js built-in serverless functions.
+Key Schemas/Tables: users, sessions, any domain entities defined in the SQL baseline files under `scripts/sql/migrations`.
 
 Technologies: Next.js, React, HTML/CSS/JS
+Database Migrations (SQL baseline):
 
-Deployment: Containerized via `Dockerfile`/`docker-compose.yml`, or deployable to Vercel/Netlify as a Next.js app.
+Migrations are provided as SQL files under `scripts/sql/migrations` and applied idempotently by `scripts/apply_sql_migration_neon.sh`. To apply locally or to Neon, set `DATABASE_URL` and run the script.
 
-### 3.2. Backend Services
-
-Name: App API / Server
+```bash
+export DATABASE_URL="postgresql://<user>:<pw>@<host>:5432/<db>"
+./scripts/apply_sql_migration_neon.sh
+```
 
 Description: Handles business logic and data access. This can be implemented as Next.js API routes (inside `pages/api` if present) or as a separate Node/Express service. It uses Prisma to access the primary database.
 

@@ -1,15 +1,16 @@
-const { PrismaClient } = require('@prisma/client');
+const { Client } = require('pg');
+
 (async () => {
-  const p = new PrismaClient();
+  const client = new Client({ connectionString: process.env.DATABASE_URL });
   try {
-    await p.$connect();
-    const res = await p.$queryRaw`SELECT 1 as ok`;
-    console.log('prisma-ok', res);
-    await p.$disconnect();
+    await client.connect();
+    const res = await client.query('SELECT 1 AS ok');
+    console.log('prisma-ok', res.rows);
+    await client.end();
     process.exit(0);
   } catch (e) {
     console.error(e);
-    try { await p.$disconnect(); } catch (e2) {}
+    try { await client.end(); } catch (e2) {}
     process.exit(3);
   }
 })();

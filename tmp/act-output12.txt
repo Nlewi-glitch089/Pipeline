@@ -1,0 +1,36 @@
+[CI/CD/build-and-test] ⭐ Run Set up job
+[CI/CD/build-and-test] 🚀  Start image=nektos/act-environments-ubuntu:18.04
+[CI/CD/build-and-test]   🐳  docker pull image=nektos/act-environments-ubuntu:18.04 platform= username= forcePull=true
+[CI/CD/build-and-test] using DockerAuthConfig authentication for docker pull
+[CI/CD/build-and-test]   🐳  docker create image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test]   🐳  docker run image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[CI/CD/build-and-test]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[CI/CD/build-and-test]   ✅  Success - Set up job
+[CI/CD/build-and-test]   ☁  git clone 'https://github.com/actions/setup-node' # ref=v4
+[CI/CD/build-and-test] ⭐ Run Main Checkout code
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\BrightPath\Pipeline\. dst=/mnt/c/Users/Launchpad8/BrightPath/Pipeline
+[CI/CD/build-and-test]   ✅  Success - Main Checkout code [547.9601ms]
+[CI/CD/build-and-test] ⭐ Run Main Setup Node
+[CI/CD/build-and-test]   🐳  docker cp src=C:\Users\Launchpad8\.cache\act/actions-setup-node@v4/ dst=/var/run/act/actions/actions-setup-node@v4/
+[CI/CD/build-and-test]   🐳  docker exec cmd=[/usr/local/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js] user= workdir=
+[CI/CD/build-and-test]   | /run/act/actions/actions-setup-node@v4/dist/setup/index.js:68747
+[CI/CD/build-and-test]   |       const responseObject = new Response(response.body?.source ?? null)
+[CI/CD/build-and-test]   |                                                         ^
+[CI/CD/build-and-test]   | 
+[CI/CD/build-and-test]   | SyntaxError: Unexpected token '.'
+[CI/CD/build-and-test]   |     at wrapSafe (internal/modules/cjs/loader.js:1072:16)
+[CI/CD/build-and-test]   |     at Module._compile (internal/modules/cjs/loader.js:1122:27)
+[CI/CD/build-and-test]   |     at Object.Module._extensions..js (internal/modules/cjs/loader.js:1178:10)
+[CI/CD/build-and-test]   |     at Module.load (internal/modules/cjs/loader.js:1002:32)
+[CI/CD/build-and-test]   |     at Function.Module._load (internal/modules/cjs/loader.js:901:14)
+[CI/CD/build-and-test]   |     at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12)
+[CI/CD/build-and-test]   |     at internal/main/run_main_module.js:18:47
+[CI/CD/build-and-test]   ❌  Failure - Main Setup Node [5.8588905s]
+[CI/CD/build-and-test] exitcode '1': failure
+[CI/CD/build-and-test] ⭐ Run Main Tear down
+[CI/CD/build-and-test]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/10] user= workdir=
+[CI/CD/build-and-test]   | Docker version 3.0.10+azure, build 99c5edceb48d64c1aa5d09b8c9c499d431d98bb9
+[CI/CD/build-and-test]   ✅  Success - Main Tear down [676.1941ms]
+[CI/CD/build-and-test] ⭐ Run Complete job
+[CI/CD/build-and-test]   ✅  Success - Complete job
+[CI/CD/build-and-test] 🏁  Job failed

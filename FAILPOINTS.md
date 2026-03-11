@@ -34,7 +34,7 @@ depends_on:
 docker compose up --build
 ```
 
-2) Prisma Migrations Fail — "relation does not exist"
+2) Database migrations fail — "relation does not exist"
 
 Symptom
 
@@ -46,13 +46,20 @@ Database not initialized, migrations applied out of order, or incorrect `DATABAS
 
 Fix
 
+Check the database and apply SQL migrations (this project provides an idempotent SQL runner):
+
 ```bash
-docker compose exec db psql -U "$POSTGRES_USER" -c '\l'
-# then run migrations inside the app container
-docker compose exec app npx prisma migrate deploy
+# inspect DB from the host or within the compose network
+docker compose exec db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c '\dt'
+
+# apply migrations using the project's migration runner (uses DATABASE_URL)
+export DATABASE_URL="postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@db:5432/$POSTGRES_DB"
+./scripts/apply_sql_migration_neon.sh
 ```
 
-Verify `DATABASE_URL` inside the container before running migrations.
+If you are using a hosted provider (Neon), set `DATABASE_URL` to the provider's connection string and run `./scripts/apply_sql_migration_neon.sh`.
+
+Verify `DATABASE_URL` before running migrations.
 
 3) Secrets Exposed in Docker Image or Build Context
 
