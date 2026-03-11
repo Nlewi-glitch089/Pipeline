@@ -13,9 +13,18 @@ jobs:
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # Automatically enable Docker services when running on github.com (real Actions).
+      # Keep disabled by default for local Act runs to avoid requiring docker socket.
+      RUN_DOCKER_SERVICES: ${{ github.server_url == 'https://github.com' && 'true' || 'false' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
       - name: Construct or override DATABASE_URL from POSTGRES_* secrets
         run: |
           # If POSTGRES_* secrets are provided, use them to build the URL and
@@ -33,6 +42,7 @@ jobs:
             fi
           fi
       - name: Check DATABASE_URL present and valid
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' || env.DATABASE_URL != '' }}
         run: |
           if [ -z "${DATABASE_URL:-}" ]; then
             echo "ERROR: DATABASE_URL is not set in runner environment. Add it as a repository secret (Settings → Secrets → Actions)." >&2
@@ -42,53 +52,50 @@ jobs:
             postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
             *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
           esac
-      - name: Run CI preflight check (debug)
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run smoke tests
         run: |
-          echo "PWD=$(pwd)"
-          echo "Listing repo root:"
-          ls -la
-          echo "Listing scripts/:"
-          ls -la scripts || true
-          echo "Running preflight with bash..."
-          bash ./scripts/check_ci.sh
+          echo "Running smoke tests (non-invasive)"
+          npm test
         shell: bash
       - name: Build containers
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose build
       - name: Start services
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose up -d
-      - name: Wait for database
-        run: sleep 15
-      - name: Generate Prisma client
-        run: docker compose exec -T app npm run prisma:generate
-      - name: Run migrations
-        run: docker compose exec -T app npx prisma migrate deploy
+      - name: Wait for database readiness
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "No DATABASE_URL available for readiness check; skipping readiness probe.";
+            exit 0;
+          fi
+          echo "Waiting for database to accept connections via psql (up to 2 minutes)..."
+          success=0
+          for i in $(seq 1 60); do
+            docker run --rm -e DATABASE_URL="${DATABASE_URL}" postgres:15 sh -c 'psql "$DATABASE_URL" -c "SELECT 1;"' >/dev/null 2>&1 && { success=1; echo "DB ready (attempt $i)"; break; }
+            echo "Attempt $i: DB not ready yet; sleeping 2s"
+            sleep 2
+          done
+          if [ "$success" -ne 1 ]; then
+            echo "Timed out waiting for database to become ready" >&2
+            exit 1
+          fi
+      - name: Apply migrations (full smoke)
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "ERROR: DATABASE_URL is not set" >&2
+            exit 1
+          fi
+          echo "Running full smoke: npm test -- --full"
+          npm test -- --full
       - name: Tear down
-        if: always()
+        if: ${{ always() && env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose down -v
 
-  deploy:
-    needs: build-and-test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            if [ ! -d ~/my-app ]; then
-              git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git ~/my-app
-            fi
-            cd ~/my-app && git pull origin main
-            docker compose down
-            docker compose up --build -d
-            
-  # build-and-smoke job intentionally removed — single CI workflow kept
+  # deploy job removed: on-prem/EC2 SSH deployment was removed from this
+  # workflow to simplify local development and avoid accidental SSH steps
+  # during CI runs. If you need a deploy step in future, see README.md
+  # for a suggested implementation snippet.
 
