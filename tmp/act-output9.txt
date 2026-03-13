@@ -1,7 +1,0 @@
-[CI/CD/build-and-test] ⭐ Run Set up job
-[CI/CD/build-and-test] 🚀  Start image=node:20-bullseye
-[CI/CD/build-and-test]   🐳  docker pull image=node:20-bullseye platform= username= forcePull=true
-[CI/CD/build-and-test] using DockerAuthConfig authentication for docker pull
-[CI/CD/build-and-test] Error response from daemon: authentication required - incorrect username or password
-[CI/CD/build-and-test]   ❌  Failure - Set up job
-[CI/CD/build-and-test] 🏁  Job failed
