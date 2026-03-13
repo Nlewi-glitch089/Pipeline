@@ -60,6 +60,27 @@ jobs:
       - name: Build containers
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose build
+      - name: Prepare secret files for docker-compose
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: |
+          echo "Preparing ./secrets files for docker-compose"
+          mkdir -p ./secrets
+          # Write DATABASE_URL (if present) to secrets file used by compose
+          if [ -n "${DATABASE_URL:-}" ]; then
+            echo -n "${DATABASE_URL}" > ./secrets/database_url.txt
+            echo "Wrote database_url.txt"
+          fi
+          # Write individual postgres secrets if present
+          if [ -n "${POSTGRES_USER:-}" ]; then
+            echo -n "${POSTGRES_USER}" > ./secrets/postgres_user.txt
+          fi
+          if [ -n "${POSTGRES_PASSWORD:-}" ]; then
+            echo -n "${POSTGRES_PASSWORD}" > ./secrets/postgres_password.txt
+          fi
+          if [ -n "${POSTGRES_DB:-}" ]; then
+            echo -n "${POSTGRES_DB}" > ./secrets/postgres_db.txt
+          fi
+          ls -la ./secrets || true
       - name: Start services
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose up -d
