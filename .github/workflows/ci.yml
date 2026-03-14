@@ -27,22 +27,17 @@ jobs:
           node-version: '20'
       - name: Install dependencies
         run: npm ci
-      - name: Construct or override DATABASE_URL from POSTGRES_* secrets
+      - name: Validate DATABASE_URL or POSTGRES_* secrets are present
         run: |
-          # If POSTGRES_* secrets are provided, use them to build the URL and
-          # override any existing DATABASE_URL so the app inside docker-compose
-          # can resolve the DB host as the Compose service name `db`.
-          if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
-            echo "DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}" >> $GITHUB_ENV
-            echo "Constructed DATABASE_URL from POSTGRES_* secrets (overriding provided DATABASE_URL if any)"
-          else
-            if [ -n "${DATABASE_URL:-}" ]; then
-              echo "Using provided DATABASE_URL secret"
-            else
-              echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
-              exit 1
-            fi
+          # Require either a direct DATABASE_URL secret or the three POSTGRES_* secrets.
+          # DATABASE_URL is kept as-is (e.g. Neon) for runner-side use.
+          # The compose-internal URL (using host `db`) is written to secrets/database_url.txt
+          # later in the "Prepare secret files" step.
+          if [ -z "${DATABASE_URL:-}" ] && { [ -z "${POSTGRES_USER:-}" ] || [ -z "${POSTGRES_PASSWORD:-}" ] || [ -z "${POSTGRES_DB:-}" ]; }; then
+            echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
+            exit 1
           fi
+          echo "Credentials present — OK"
       - name: Check DATABASE_URL present and valid
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' || env.DATABASE_URL != '' }}
         run: |
@@ -65,12 +60,16 @@ jobs:
           echo "Preparing ./secrets files for docker-compose"
           mkdir -p ./secrets
 
-          # Write DATABASE_URL to the secrets file docker-compose expects.
-          if [ -n "${DATABASE_URL:-}" ]; then
+          # Write the compose-internal DATABASE_URL (host = `db` service name).
+          # This is separate from the runner-side DATABASE_URL which may point to Neon.
+          if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
+            printf 'postgresql://%s:%s@db:5432/%s' "${POSTGRES_USER}" "${POSTGRES_PASSWORD}" "${POSTGRES_DB}" > ./secrets/database_url.txt
+            echo "Wrote compose-internal database_url.txt (host=db)"
+          elif [ -n "${DATABASE_URL:-}" ]; then
             printf '%s' "${DATABASE_URL}" > ./secrets/database_url.txt
-            echo "Wrote database_url.txt"
+            echo "Wrote database_url.txt from DATABASE_URL secret"
           else
-            echo "ERROR: DATABASE_URL is not set — cannot write database_url.txt" >&2
+            echo "ERROR: No credentials to write database_url.txt" >&2
             exit 1
           fi
 
@@ -142,12 +141,10 @@ jobs:
       - name: Apply migrations (full smoke)
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
-          if [ -z "${DATABASE_URL:-}" ]; then
-            echo "ERROR: DATABASE_URL is not set" >&2
-            exit 1
-          fi
-          echo "Running full smoke: node ./scripts/test/smoke.js --full"
-          node ./scripts/test/smoke.js --full
+          # Run migrations inside the app container which is on the Compose network
+          # and can reach the `db` service by hostname.
+          echo "Running migrations inside app container..."
+          docker compose exec -T app node scripts/test/smoke.js --full
       - name: Tear down
         if: ${{ always() && env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose down -v
