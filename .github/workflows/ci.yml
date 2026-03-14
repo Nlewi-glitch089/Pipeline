@@ -115,19 +115,28 @@ jobs:
       - name: Wait for database readiness
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
-          if [ -z "${DATABASE_URL:-}" ]; then
-            echo "No DATABASE_URL available for readiness check; skipping readiness probe.";
-            exit 0;
+          echo "Waiting for db service to pass its healthcheck (up to 2 minutes)..."
+          db_container=$(docker compose ps -q db 2>/dev/null)
+          if [ -z "$db_container" ]; then
+            echo "ERROR: could not find db container" >&2
+            docker compose ps
+            exit 1
           fi
-          echo "Waiting for database to accept connections via psql (up to 2 minutes)..."
+          echo "db container ID: $db_container"
           success=0
           for i in $(seq 1 60); do
-            docker run --rm -e DATABASE_URL="${DATABASE_URL}" postgres:15 sh -c 'psql "$DATABASE_URL" -c "SELECT 1;"' >/dev/null 2>&1 && { success=1; echo "DB ready (attempt $i)"; break; }
-            echo "Attempt $i: DB not ready yet; sleeping 2s"
+            status=$(docker inspect --format='{{.State.Health.Status}}' "$db_container" 2>/dev/null || echo "missing")
+            echo "Attempt $i: db health = $status"
+            if [ "$status" = "healthy" ]; then
+              success=1
+              echo "DB is healthy"
+              break
+            fi
             sleep 2
           done
           if [ "$success" -ne 1 ]; then
             echo "Timed out waiting for database to become ready" >&2
+            docker compose logs db --tail=30
             exit 1
           fi
       - name: Apply migrations (full smoke)
