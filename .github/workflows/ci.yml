@@ -59,33 +59,56 @@ jobs:
           echo "Running smoke tests (non-invasive)"
           node ./scripts/test/smoke.js
         shell: bash
-      - name: Build containers
-        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
-        run: docker compose build
       - name: Prepare secret files for docker-compose
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
           echo "Preparing ./secrets files for docker-compose"
           mkdir -p ./secrets
-          # Write DATABASE_URL (if present) to secrets file used by compose
+
+          # Write DATABASE_URL to the secrets file docker-compose expects.
           if [ -n "${DATABASE_URL:-}" ]; then
-            echo -n "${DATABASE_URL}" > ./secrets/database_url.txt
+            printf '%s' "${DATABASE_URL}" > ./secrets/database_url.txt
             echo "Wrote database_url.txt"
+          else
+            echo "ERROR: DATABASE_URL is not set — cannot write database_url.txt" >&2
+            exit 1
           fi
-          # Write individual postgres secrets if present
+
+          # Write individual postgres secrets (used by docker-compose db service).
+          # Fall back to values parsed from DATABASE_URL if explicit secrets absent.
           if [ -n "${POSTGRES_USER:-}" ]; then
-            echo -n "${POSTGRES_USER}" > ./secrets/postgres_user.txt
+            printf '%s' "${POSTGRES_USER}" > ./secrets/postgres_user.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*://\([^:]*\):.*|\1|')" > ./secrets/postgres_user.txt
           fi
+
           if [ -n "${POSTGRES_PASSWORD:-}" ]; then
-            echo -n "${POSTGRES_PASSWORD}" > ./secrets/postgres_password.txt
+            printf '%s' "${POSTGRES_PASSWORD}" > ./secrets/postgres_password.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*://[^:]*:\([^@]*\)@.*|\1|')" > ./secrets/postgres_password.txt
           fi
+
           if [ -n "${POSTGRES_DB:-}" ]; then
-            echo -n "${POSTGRES_DB}" > ./secrets/postgres_db.txt
+            printf '%s' "${POSTGRES_DB}" > ./secrets/postgres_db.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*/\([^?]*\).*|\1|')" > ./secrets/postgres_db.txt
           fi
+
+          # NextAuth secret — required for the app to start.
           if [ -n "${NEXTAUTH_SECRET:-}" ]; then
-            echo -n "${NEXTAUTH_SECRET}" > ./secrets/nextauth_secret.txt
+            printf '%s' "${NEXTAUTH_SECRET}" > ./secrets/nextauth_secret.txt
+          else
+            # Generate a random secret so the app starts; sessions won't persist
+            # across runs but the build/smoke will succeed.
+            openssl rand -base64 32 > ./secrets/nextauth_secret.txt
+            echo "WARNING: NEXTAUTH_SECRET not set — generated a temporary secret for this CI run"
           fi
-          ls -la ./secrets || true
+
+          echo "Secret files written:"
+          ls -la ./secrets/
+      - name: Build containers
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: docker compose build
       - name: Start services
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose up -d
