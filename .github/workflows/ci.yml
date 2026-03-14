@@ -141,10 +141,11 @@ jobs:
       - name: Apply migrations (full smoke)
         if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
-          # Run migrations inside the app container which is on the Compose network
-          # and can reach the `db` service by hostname.
+          # Pass the compose-internal DATABASE_URL (host=db) from the secrets file
+          # into the exec session so smoke.js can see it as an env var.
+          COMPOSE_DB_URL="$(cat ./secrets/database_url.txt)"
           echo "Running migrations inside app container..."
-          docker compose exec -T app node scripts/test/smoke.js --full
+          docker compose exec -T -e DATABASE_URL="${COMPOSE_DB_URL}" app node scripts/test/smoke.js --full
       - name: Tear down
         if: ${{ always() && env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose down -v
