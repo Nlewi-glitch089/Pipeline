@@ -1,14 +1,3 @@
-:root{
-  --bg:#0b0b12;
-  --panel-start: rgba(14,10,17,0.94);
-  --panel-end: rgba(12,9,16,0.92);
-  --muted: rgba(225,225,235,0.68);
-  --card-border: rgba(155,89,255,0.22);
-  --card-glow: rgba(155,89,255,0.20);
-  --accent-cyan: #3fe0ff;
-  --accent-pink: #ff3cac;
-}
-
 .page{
   min-height:100vh;
   background: radial-gradient(ellipse at center, rgba(255,255,255,0.01) 0%, transparent 40%), var(--bg);
@@ -170,10 +159,7 @@
 
 .footer{text-align:center;padding:18px 12px;color:var(--muted);font-size:13px}
 
-/* custom scrollbar for a neon look */
-::-webkit-scrollbar{width:12px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff6fa3,#9b59ff);border-radius:999px;box-shadow:inset 0 0 6px rgba(0,0,0,0.3)}
+/* Scrollbar styles live in styles/globals.css */
 
 @media(max-width:900px){
   .features{grid-template-columns:1fr;}

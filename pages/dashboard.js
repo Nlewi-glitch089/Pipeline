@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Header from '../components/Header'
 import Icons from '../components/Icons'
@@ -18,8 +20,18 @@ const mockAchievements = [
 
 export default function Dashboard() {
   const router = useRouter()
+  const { data: session, status } = useSession()
 
-  const user = { username: 'Nakerra', streak: 5, lessonsCompleted: 12, quizAverage: 82 }
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') router.replace('/login')
+  }, [status, router])
+
+  if (status === 'loading' || status === 'unauthenticated') {
+    return <div className={styles.page} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}><span style={{ color: '#aaa' }}>Loading…</span></div>
+  }
+
+  const user = { username: session?.user?.name || session?.user?.email?.split('@')[0] || 'Learner', streak: 5, lessonsCompleted: 12, quizAverage: 82 }
 
   const enrolledCourses = mockCourses.filter(c => c.enrolled)
 

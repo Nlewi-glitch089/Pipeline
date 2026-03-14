@@ -1,44 +1,24 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import Icons from './Icons'
+import { useSession, signOut } from 'next-auth/react'
 
-export default function Header({ hideAuth = false }){
-  const [user, setUser] = useState(null)
+export default function Header({ hideAuth = false }) {
+  const { data: session, status } = useSession()
   const router = useRouter()
-  const [hydrated, setHydrated] = useState(false)
 
-  useEffect(()=>{
-    try{
-      const raw = localStorage.getItem('brainbyte_user')
-      if(raw) setUser(JSON.parse(raw))
-    }catch(e){/* ignore */}
-    setHydrated(true)
-  },[])
+  const user = session?.user
+    ? { username: session.user.name || session.user.email?.split('@')[0] }
+    : null
 
-  useEffect(()=>{
-    function onAuthChange(){
-      try{
-        const raw = localStorage.getItem('brainbyte_user')
-        if(raw) setUser(JSON.parse(raw))
-        else setUser(null)
-      }catch(e){setUser(null)}
-      setHydrated(true)
-    }
-    window.addEventListener('brainbyte_auth_changed', onAuthChange)
-    window.addEventListener('storage', onAuthChange)
-    return ()=>{ window.removeEventListener('brainbyte_auth_changed', onAuthChange); window.removeEventListener('storage', onAuthChange) }
-  },[])
-
-  function handleLogout(){
-    localStorage.removeItem('brainbyte_user')
-    setUser(null)
-    router.push('/login')
+  function handleLogout() {
+    signOut({ callbackUrl: '/login' })
   }
 
-  const isHome = router && router.pathname === '/'
-  const showSignOut = user && router && (router.pathname === '/dashboard' || router.pathname.startsWith('/dashboard'))
+  const isHome     = router && router.pathname === '/'
+  const hydrated   = status !== 'loading'
+  const showSignOut = !!user && router && (router.pathname === '/dashboard' || router.pathname.startsWith('/dashboard'))
 
   return (
     <header className={styles.header}>

@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {useRouter} from 'next/router'
+import {signIn} from 'next-auth/react'
 import Link from 'next/link'
 import styles from '../styles/Signup.module.css'
 import Icons from '../components/Icons'
@@ -7,21 +8,31 @@ import Icons from '../components/Icons'
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  function handleLogin(e){
+  async function handleLogin(e) {
     e.preventDefault()
     const form = e.currentTarget
-    const email = (form.email && form.email.value || '').trim()
+    const email    = (form.email    && form.email.value    || '').trim()
     const password = (form.password && form.password.value || '').trim()
-    if(!email || !password){
+    if (!email || !password) {
       setError('Please enter email and password')
       return
     }
     setError('')
-    try{ localStorage.setItem('brainbyte_user', JSON.stringify({ username: email.split('@')[0], email })) }catch(e){}
-    try{ window.dispatchEvent(new Event('brainbyte_auth_changed')) }catch(e){}
-    router.push('/dashboard')
+    setLoading(true)
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
+    setLoading(false)
+    if (result?.error) {
+      setError('Invalid email or password')
+    } else {
+      router.push('/dashboard')
+    }
   }
   return (
     <div className={styles.page}>
@@ -72,7 +83,7 @@ export default function Login() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.signBtn}>Login</button>
+          <button type="submit" className={styles.signBtn} disabled={loading}>{loading ? 'Logging in…' : 'Login'}</button>
 
           <p className={styles.small}>Don't have an account? <Link href="/signup" className={styles.link}>Sign up</Link></p>
         </form>

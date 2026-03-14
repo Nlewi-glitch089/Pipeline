@@ -34,4 +34,26 @@ case "${DATABASE_URL}" in
     ;;
 esac
 
+# Load NEXTAUTH_SECRET from secrets file if present
+if [ -f /run/secrets/nextauth_secret ]; then
+  NEXTAUTH_SECRET="$(cat /run/secrets/nextauth_secret)"
+  export NEXTAUTH_SECRET
+fi
+
+if [ -z "${NEXTAUTH_SECRET:-}" ]; then
+  echo "WARNING: NEXTAUTH_SECRET is not set. Sessions will not work correctly." >&2
+fi
+
+# Apply Prisma DB migrations on every container start.
+# If prisma/migrations/ has migration files use 'migrate deploy' (recommended for production).
+# If no migration files exist yet (first run / schema-only workflow) fall back to 'db push'.
+echo "Applying database schema..."
+if [ -d "./prisma/migrations" ] && ls ./prisma/migrations/*.sql >/dev/null 2>&1; then
+  echo "Running prisma migrate deploy..."
+  npx prisma migrate deploy
+else
+  echo "No migration files found; running prisma db push to sync schema..."
+  npx prisma db push --accept-data-loss
+fi
+
 exec "$@"

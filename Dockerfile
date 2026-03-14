@@ -1,21 +1,28 @@
-FROM node:20-alpine AS deps
+FROM node:20-bullseye-slim AS deps
 WORKDIR /app
-COPY package.json ./
-RUN npm install
+COPY package.json package-lock.json* ./
+COPY prisma ./prisma
+RUN npm ci
 
-FROM node:20-alpine AS builder
+FROM node:20-bullseye-slim AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npx prisma generate --schema=./prisma/schema.prisma || true
 RUN npm run build
 
-FROM node:20-alpine AS runner
+FROM node:20-bullseye-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-RUN apk add --no-cache curl openssl bash postgresql-client
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	curl \
+	openssl \
+	bash \
+	postgresql-client && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/scripts ./scripts
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

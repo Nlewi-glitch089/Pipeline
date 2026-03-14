@@ -13,6 +13,8 @@ jobs:
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL || 'http://localhost:3000' }}
       # Automatically enable Docker services when running on github.com (real Actions).
       # Keep disabled by default for local Act runs to avoid requiring docker socket.
       RUN_DOCKER_SERVICES: ${{ github.server_url == 'https://github.com' && 'true' || 'false' }}
@@ -79,6 +81,9 @@ jobs:
           fi
           if [ -n "${POSTGRES_DB:-}" ]; then
             echo -n "${POSTGRES_DB}" > ./secrets/postgres_db.txt
+          fi
+          if [ -n "${NEXTAUTH_SECRET:-}" ]; then
+            echo -n "${NEXTAUTH_SECRET}" > ./secrets/nextauth_secret.txt
           fi
           ls -la ./secrets || true
       - name: Start services

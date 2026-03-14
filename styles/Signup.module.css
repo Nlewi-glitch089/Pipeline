@@ -1,9 +1,4 @@
 
-:root{
-	--bg:#0b0b12;
-	--muted:rgba(255,255,255,0.7);
-}
-
 .page{
 	min-height:100vh;
 	background:radial-gradient(ellipse at center, rgba(255,255,255,0.01) 0%, transparent 40%), var(--bg);
@@ -42,12 +37,10 @@
 .inputIcon{opacity:0.95}
 .input{flex:1;background:transparent;border:none;color:#eae6ff;outline:none;font-size:14px}
 
-/* Ensure browser autofill doesn't force a white background and keeps dark theme */
+/* Autofill dark-theme override is in styles/globals.css */
 .input:-webkit-autofill,
 .input:-webkit-autofill:focus,
-.input:-webkit-autofill:hover,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:focus{
+.input:-webkit-autofill:hover {
 	-webkit-text-fill-color: #eae6ff !important;
 	transition: background-color 5000s ease-in-out 0s !important;
 	box-shadow: 0 0 0 1000px transparent inset !important;

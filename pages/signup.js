@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {useRouter} from 'next/router'
+import {signIn} from 'next-auth/react'
 import Link from 'next/link'
 import styles from '../styles/Signup.module.css'
 import Icons from '../components/Icons'
@@ -7,22 +8,50 @@ import Icons from '../components/Icons'
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  function handleSignup(e){
+  async function handleSignup(e) {
     e.preventDefault()
-    const form = e.currentTarget
-    const email = (form.email && form.email.value || '').trim()
+    const form     = e.currentTarget
+    const email    = (form.email    && form.email.value    || '').trim()
     const password = (form.password && form.password.value || '').trim()
     const username = (form.username && form.username.value || '').trim()
-    if(!email || !password){
+    if (!email || !password) {
       setError('Please enter email and password')
       return
     }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters')
+      return
+    }
     setError('')
-    try{ localStorage.setItem('brainbyte_user', JSON.stringify({ username: username || email.split('@')[0], email })) }catch(e){}
-    try{ window.dispatchEvent(new Event('brainbyte_auth_changed')) }catch(e){}
-    router.push('/dashboard')
+    setLoading(true)
+    // 1. Create account in DB
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, name: username || email.split('@')[0] }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      setLoading(false)
+      setError(data.error || 'Registration failed')
+      return
+    }
+    // 2. Sign in immediately after account creation
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
+    setLoading(false)
+    if (result?.error) {
+      setError('Account created — please log in')
+      router.push('/login')
+    } else {
+      router.push('/dashboard')
+    }
   }
   return (
     <div className={styles.page}>
@@ -81,7 +110,7 @@ export default function Signup() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.signBtn}>Sign Up</button>
+          <button type="submit" className={styles.signBtn} disabled={loading}>{loading ? 'Creating account…' : 'Sign Up'}</button>
 
           <p className={styles.small}>Already have an account? <Link href="/login" className={styles.link}>Login</Link></p>
         </form>
