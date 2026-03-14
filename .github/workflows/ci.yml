@@ -1,84 +1,157 @@
-name: CI Build & Smoke Test
-
+name: CI/CD
 on:
   push:
-    branches: [ main ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build-and-smoke:
+  build-and-test:
     runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL || 'http://localhost:3000' }}
+      # Automatically enable Docker services when running on github.com (real Actions).
+      # Keep disabled by default for local Act runs to avoid requiring docker socket.
+      RUN_DOCKER_SERVICES: ${{ github.server_url == 'https://github.com' && 'true' || 'false' }}
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Set up QEMU and Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Ensure docker compose is available
-        run: docker compose version
-
-      - name: Cache NPM
-        uses: actions/cache@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json','**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Build app image with Buildx and cache
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate DATABASE_URL or POSTGRES_* secrets are present
         run: |
-          docker buildx create --use --name buildx-builder || true
-          docker buildx build --cache-from=type=gha --cache-to=type=gha,mode=max -t pipeline-app:ci . --load
+          # Require either a direct DATABASE_URL secret or the three POSTGRES_* secrets.
+          # DATABASE_URL is kept as-is (e.g. Neon) for runner-side use.
+          # The compose-internal URL (using host `db`) is written to secrets/database_url.txt
+          # later in the "Prepare secret files" step.
+          if [ -z "${DATABASE_URL:-}" ] && { [ -z "${POSTGRES_USER:-}" ] || [ -z "${POSTGRES_PASSWORD:-}" ] || [ -z "${POSTGRES_DB:-}" ]; }; then
+            echo "ERROR: No DATABASE_URL and no complete POSTGRES_* secrets available" >&2
+            exit 1
+          fi
+          echo "Credentials present — OK"
+      - name: Check DATABASE_URL present and valid
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' || env.DATABASE_URL != '' }}
+        run: |
+          if [ -z "${DATABASE_URL:-}" ]; then
+            echo "ERROR: DATABASE_URL is not set in runner environment. Add it as a repository secret (Settings → Secrets → Actions)." >&2
+            exit 1
+          fi
+          case "${DATABASE_URL}" in
+            postgresql://*|postgres://*) echo "DATABASE_URL format OK" ;;
+            *) echo "ERROR: DATABASE_URL must start with 'postgresql://' or 'postgres://'" >&2 ; exit 1 ;;
+          esac
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests (non-invasive)"
+          node ./scripts/test/smoke.js
+        shell: bash
+      - name: Prepare secret files for docker-compose
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: |
+          echo "Preparing ./secrets files for docker-compose"
+          mkdir -p ./secrets
 
+          # Write the compose-internal DATABASE_URL (host = `db` service name).
+          # This is separate from the runner-side DATABASE_URL which may point to Neon.
+          if [ -n "${POSTGRES_USER:-}" ] && [ -n "${POSTGRES_PASSWORD:-}" ] && [ -n "${POSTGRES_DB:-}" ]; then
+            printf 'postgresql://%s:%s@db:5432/%s' "${POSTGRES_USER}" "${POSTGRES_PASSWORD}" "${POSTGRES_DB}" > ./secrets/database_url.txt
+            echo "Wrote compose-internal database_url.txt (host=db)"
+          elif [ -n "${DATABASE_URL:-}" ]; then
+            printf '%s' "${DATABASE_URL}" > ./secrets/database_url.txt
+            echo "Wrote database_url.txt from DATABASE_URL secret"
+          else
+            echo "ERROR: No credentials to write database_url.txt" >&2
+            exit 1
+          fi
+
+          # Write individual postgres secrets (used by docker-compose db service).
+          # Fall back to values parsed from DATABASE_URL if explicit secrets absent.
+          if [ -n "${POSTGRES_USER:-}" ]; then
+            printf '%s' "${POSTGRES_USER}" > ./secrets/postgres_user.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*://\([^:]*\):.*|\1|')" > ./secrets/postgres_user.txt
+          fi
+
+          if [ -n "${POSTGRES_PASSWORD:-}" ]; then
+            printf '%s' "${POSTGRES_PASSWORD}" > ./secrets/postgres_password.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*://[^:]*:\([^@]*\)@.*|\1|')" > ./secrets/postgres_password.txt
+          fi
+
+          if [ -n "${POSTGRES_DB:-}" ]; then
+            printf '%s' "${POSTGRES_DB}" > ./secrets/postgres_db.txt
+          else
+            printf '%s' "$(echo "${DATABASE_URL}" | sed 's|.*/\([^?]*\).*|\1|')" > ./secrets/postgres_db.txt
+          fi
+
+          # NextAuth secret — required for the app to start.
+          if [ -n "${NEXTAUTH_SECRET:-}" ]; then
+            printf '%s' "${NEXTAUTH_SECRET}" > ./secrets/nextauth_secret.txt
+          else
+            # Generate a random secret so the app starts; sessions won't persist
+            # across runs but the build/smoke will succeed.
+            openssl rand -base64 32 > ./secrets/nextauth_secret.txt
+            echo "WARNING: NEXTAUTH_SECRET not set — generated a temporary secret for this CI run"
+          fi
+
+          echo "Secret files written:"
+          ls -la ./secrets/
+      - name: Build containers
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
+        run: docker compose build
       - name: Start services
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: docker compose up -d
-
-      - name: Wait for DB to be ready
+      - name: Wait for database readiness
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
-          set -e
-          for i in {1..30}; do
-            if docker compose exec db pg_isready -U postgres >/dev/null 2>&1; then
-              echo "db ready"
+          echo "Waiting for db service to pass its healthcheck (up to 2 minutes)..."
+          db_container=$(docker compose ps -q db 2>/dev/null)
+          if [ -z "$db_container" ]; then
+            echo "ERROR: could not find db container" >&2
+            docker compose ps
+            exit 1
+          fi
+          echo "db container ID: $db_container"
+          success=0
+          for i in $(seq 1 60); do
+            status=$(docker inspect --format='{{.State.Health.Status}}' "$db_container" 2>/dev/null || echo "missing")
+            echo "Attempt $i: db health = $status"
+            if [ "$status" = "healthy" ]; then
+              success=1
+              echo "DB is healthy"
               break
             fi
-            echo "waiting for db... ($i)"
             sleep 2
           done
-
-      - name: Run database migrations
+          if [ "$success" -ne 1 ]; then
+            echo "Timed out waiting for database to become ready" >&2
+            docker compose logs db --tail=30
+            exit 1
+          fi
+      - name: Apply migrations (full smoke)
+        if: ${{ env.RUN_DOCKER_SERVICES == 'true' }}
         run: |
-          # run migrations if any (no-op if none)
-          docker compose exec app npx prisma migrate deploy || true
-          docker compose exec app npm run prisma:generate || true
-
-      - name: Wait for app to be ready
-        run: |
-          set -e
-          for i in {1..30}; do
-            if curl -sSf http://localhost:3000/ >/dev/null 2>&1; then
-              echo "app ready"
-              break
-            fi
-            echo "waiting for app... ($i)"
-            sleep 2
-          done
-
-      - name: Collect runtime artifacts
-        run: |
-          mkdir -p artifacts
-          docker compose ps > artifacts/docker_compose_ps.txt || true
-          docker compose logs --tail=200 app > artifacts/app_logs.txt || true
-          docker images --no-trunc > artifacts/images.txt || true
-          cp -v beacon/*.png artifacts/ || true
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ci-artifacts
-          path: artifacts/
-
+          # Pass the compose-internal DATABASE_URL (host=db) from the secrets file
+          # into the exec session so smoke.js can see it as an env var.
+          COMPOSE_DB_URL="$(cat ./secrets/database_url.txt)"
+          echo "Running migrations inside app container..."
+          docker compose exec -T -e DATABASE_URL="${COMPOSE_DB_URL}" app node scripts/test/smoke.js --full
       - name: Tear down
-        if: always()
-        run: docker compose down -v --remove-orphans || true
+        if: ${{ always() && env.RUN_DOCKER_SERVICES == 'true' }}
+        run: docker compose down -v
+
+  # deploy job removed: on-prem/EC2 SSH deployment was removed from this
+  # workflow to simplify local development and avoid accidental SSH steps
+  # during CI runs. If you need a deploy step in future, see README.md
+  # for a suggested implementation snippet.
+

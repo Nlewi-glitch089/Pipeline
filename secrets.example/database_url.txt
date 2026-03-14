@@ -1,0 +1,7 @@
+postgresql://postgres:postgres@db:5432/appdb
+
+# Example placeholder for local development. Replace with your real DATABASE_URL when
+# running production or CI that requires access to an external Postgres instance.
+# Format: postgres://user:password@host:5432/dbname
+# Or with URL-encoding for special characters in credentials.
+# postgres://<user>:<password>@localhost:5432/<dbname>

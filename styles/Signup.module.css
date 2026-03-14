@@ -1,0 +1,85 @@
+
+.page{
+	min-height:100vh;
+	background:radial-gradient(ellipse at center, rgba(255,255,255,0.01) 0%, transparent 40%), var(--bg);
+	display:flex;
+	align-items:flex-start;
+	justify-content:center;
+	padding:88px 20px 60px;
+}
+
+.signupHero{max-width:520px;width:100%;text-align:center}
+.bolt{display:block;margin:0 auto 6px;filter:drop-shadow(0 14px 42px rgba(120,60,180,0.22));}
+.title{font-size:32px;margin:6px 0 4px;font-weight:800;text-shadow:0 6px 18px rgba(155,89,255,0.08)}
+/* match brand gradient text used in header */
+.title{background:linear-gradient(90deg,#ff8ac6,#b58aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{color:var(--muted);margin-bottom:18px}
+
+/* form card: thin purple border, subtle shadow, no heavy overlays */
+.formCard{
+	background:linear-gradient(180deg, rgba(14,10,17,0.94), rgba(12,9,16,0.92));
+	border-radius:12px;
+	padding:26px 22px;
+	box-shadow:0 6px 18px rgba(0,0,0,0.6);
+	border:1px solid rgba(155,89,255,0.14); /* thin purple border visible by default */
+	transition:box-shadow .12s ease, border-color .12s ease;
+	position:relative;
+}
+
+/* hover: slightly strengthen the purple border and add a subtle outer glow only */
+.formCard:hover{
+	border-color:rgba(155,89,255,0.28);
+	box-shadow:0 10px 36px rgba(155,89,255,0.06);
+}
+
+.label{display:block;text-align:left;color:#d7cfff;font-weight:700;margin-bottom:12px;font-size:13px}
+.inputWrap{display:flex;align-items:center;background:transparent;border-radius:8px;padding:12px 14px;border:1px solid rgba(255,255,255,0.03);gap:10px}
+.inputIcon{opacity:0.95}
+.input{flex:1;background:transparent;border:none;color:#eae6ff;outline:none;font-size:14px}
+
+/* Autofill dark-theme override is in styles/globals.css */
+.input:-webkit-autofill,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:hover {
+	-webkit-text-fill-color: #eae6ff !important;
+	transition: background-color 5000s ease-in-out 0s !important;
+	box-shadow: 0 0 0 1000px transparent inset !important;
+	background-color: transparent !important;
+}
+
+/* small toggle button inside inputs */
+.toggleBtn{background:transparent;border:none;color:#d7cfff;cursor:pointer;padding:6px;border-radius:6px;font-size:16px}
+.toggleBtn:focus{outline:none;box-shadow:0 0 0 4px rgba(155,89,255,0.08)}
+
+/* slim, vibrant pink button with subtle hover outline */
+.signBtn{
+	margin-top:18px;
+	width:100%;
+	/* darker vibrant pink gradient */
+	background:linear-gradient(90deg,#ff1e6a,#ff3cac);
+	color:white;
+	padding:14px;
+	border-radius:10px;
+	border:2px solid transparent;
+	font-weight:700;
+	box-shadow:0 12px 48px rgba(255,30,106,0.18);
+	cursor:pointer;
+	transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+}
+.signBtn:focus{outline:none}
+.signBtn:hover{
+	transform:translateY(-3px);
+	box-shadow:0 26px 90px rgba(255,30,106,0.28), 0 6px 30px rgba(0,0,0,0.45);
+	border-color:rgba(255,45,134,0.95);
+}
+
+.error{color:#ff9bb3;font-size:13px;margin-top:12px;margin-bottom:6px}
+
+.small{color:var(--muted);font-size:13px;margin-top:14px}
+.link{color:#5ff3d6;text-decoration:none;font-weight:700}
+
+@media(max-width:480px){
+	.page{padding:40px 12px}
+	.title{font-size:26px}
+	.formCard{padding:18px}
+}
